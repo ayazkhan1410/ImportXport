@@ -1,26 +1,16 @@
 from django.shortcuts import render, redirect
 from automation.models import *
 from django.apps import apps
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, get_user_model
 from uploads.models import Upload
 from django.conf import settings
-from django.core.management import call_command
-from django.core.management import call_command, CommandError
+import time
+from .tasks import celery_email_send, import_data_task
+from .helpers import *
 
 User = get_user_model()  
-
-def get_all_custom_models():
-    default_models = ["Group", "Permission", "Session", "ContentType","LogEntry","User","Upload"]
-    custom_models = []
-
-    for app_config in apps.get_app_configs():
-        for model in app_config.get_models():
-            if model.__name__ not in default_models:
-                custom_models.append(model.__name__)
-    return custom_models
-
 
 def index(request):
     if request.method == "POST":
@@ -42,15 +32,17 @@ def index(request):
         base_path = str(settings.BASE_DIR)
         file_path = base_path + relative_path  # Absolute path
 
-        # Trigger The Command
+        # Check for the csv error
         try:
-            call_command('importdata', file_path, model_name)
-            messages.success(request, "Data successfully inserted into the table.")
-        except CommandError as ce:  
-            messages.error(request, f"Error: {str(ce)}")
-        except Exception as e:  
-            messages.error(request, f"{str(e)}")
-
+            check_csv_errors(file_path, model_name)
+        except Exception as err:
+            messages.error(request, str(err))
+            return redirect('/')
+        # Handle the import data task here
+        import_data_task.delay(file_path, model_name)
+        
+        # Show the message to the User
+        messages.success(request, "You will be get notified once you're data has been imported")
         return redirect('/')
 
     custom_models = get_all_custom_models()
@@ -58,6 +50,10 @@ def index(request):
         'custom_models': custom_models
     }
     return render(request, "automation/index.html", context)
+
+def email_send(request):
+    celery_email_send.delay()
+    return HttpResponse("<h1> Email Testing Function in Django </h1>")
 
 def login_page(request):
     if request.method == 'POST':
