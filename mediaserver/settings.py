@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'myapp',
-    "automation"
+    "automation",
+    'uploads'
 ]
 
 MIDDLEWARE = [
@@ -56,7 +57,7 @@ ROOT_URLCONF = 'mediaserver.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ["templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -143,3 +144,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #         },
 #     },
 # }
+
+from django.contrib.messages import constants as messages
+
+MESSAGE_TAGS = {
+    messages.ERROR: "danger",
+    50: "critical",
+}

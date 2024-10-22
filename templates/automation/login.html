@@ -1,0 +1,82 @@
+{% extends "automation/base.html" %}
+
+{% block title %}
+  <title>Login Here!</title>
+{% endblock title %}
+
+{% block body %}
+<style>
+  body {
+    background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .login-card {
+    width: 400px;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    background-color: #fff;
+  }
+
+  .alert {
+    margin-bottom: 20px;
+    padding: 10px;
+    border-radius: 5px;
+  }
+
+  .alert-success {
+    background-color: #d4edda;
+    color: #155724;
+  }
+
+  .alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+  }
+</style>
+
+<div class="login-card">
+  <h3 class="text-center text-primary mb-4">Welcome Back</h3>
+
+  <!-- Display messages if any -->
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+        {{ message }}
+      </div>
+    {% endfor %}
+  {% endif %}
+
+  <form method="POST">
+    {% csrf_token %}
+    <div class="form-outline mb-4">
+      <input type="email" name="email" class="form-control" placeholder="Enter your email" required />
+      <label class="form-label" for="email">Email address</label>
+    </div>
+
+    <div class="form-outline mb-4">
+      <input type="password" name="password" class="form-control" placeholder="Enter your password" required />
+      <label class="form-label" for="password">Password</label>
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" name="remember_me" id="remember_me" />
+        <label class="form-check-label" for="remember_me">Remember me</label>
+      </div>
+      <a href="#" class="text-primary">Forgot password?</a>
+    </div>
+
+    <button type="submit" class="btn btn-primary btn-block w-100 mb-3">Sign In</button>
+  </form>
+
+  <div class="home-button">
+    <a href="/" class="btn btn-outline-secondary w-100">Go to Home</a>
+  </div>
+</div>
+
+{% endblock body %}

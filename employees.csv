@@ -1,0 +1,51 @@
+employee_id,name,age,department,salary
+E242,Scarlett Lee,38,Marketing,58135
+E543,Jane Wright,43,Logistics,80592
+E423,Lucy Rodriguez,60,Administration,102671
+E639,Samuel Scott,59,Logistics,67440
+E678,Lucy Taylor,33,Human Resources,104345
+E173,Alex Walker,50,Administration,77281
+E356,Madison Martinez,50,Human Resources,103641
+E997,Sarah Lee,45,IT,106564
+E959,Tyler Taylor,58,Operations,64217
+E795,Jack Moore,43,Research and Development,108221
+E272,Jane Hernandez,31,Research and Development,72746
+E961,Kevin Williams,37,Marketing,104663
+E465,Lucas Miller,45,Logistics,86892
+E871,Brian Thompson,45,Operations,67489
+E552,Oliver Clark,35,Logistics,50634
+E774,Katie Lee,52,Operations,83882
+E271,Oliver Martin,35,Marketing,100881
+E268,Robert Young,55,IT,51686
+E505,James Thompson,23,IT,109877
+E112,Robert Smith,32,Marketing,116605
+E791,Sarah Thompson,47,Research and Development,73462
+E219,Katie Allen,34,Research and Development,63058
+E147,Sarah Scott,58,Sales,90459
+E505,Oliver Brown,50,Research and Development,66431
+E440,Brian Thompson,26,Finance,100853
+E471,Samantha Allen,54,Sales,69590
+E618,James Anderson,38,Marketing,91071
+E430,Grace Rodriguez,40,Customer Service,54547
+E406,Katie Walker,50,Customer Service,116846
+E678,Zoe Lee,53,Finance,100429
+E621,Samuel Walker,23,Operations,81778
+E774,Harper Davis,38,Logistics,116825
+E607,Ava Lee,32,Marketing,56921
+E375,Jane Jones,28,Marketing,98001
+E421,Isaac Brown,55,Finance,50396
+E987,David Garcia,26,Human Resources,94818
+E321,Grace Young,41,Operations,87904
+E741,Katie Wilson,57,Sales,99186
+E317,Matthew Hall,33,Sales,93648
+E293,Daniel Jackson,35,Finance,77044
+E637,Henry Williams,36,Logistics,109844
+E135,Kevin Lewis,36,Human Resources,52164
+E385,Brian Lewis,52,Marketing,74246
+E595,Robert Martin,39,IT,52592
+E106,John Thomas,36,Logistics,116692
+E406,Emma Hall,52,Logistics,70238
+E602,Isaac Johnson,28,Finance,90297
+E217,Alex Clark,41,Sales,77380
+E205,Brian Harris,31,Logistics,95440
+E605,Daniel Walker,58,Human Resources,51818
