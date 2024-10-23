@@ -1,4 +1,5 @@
 {% extends "automation/base.html" %}
+{% load static  %}
 
 {% block title %}
   <title>Send Email</title>
@@ -38,8 +39,7 @@
           <!-- Message -->
           <div class="mb-3">
             <label for="message" class="form-label" style="font-weight: 500;">Message</label>
-            <textarea class="form-control shadow-sm" id="message" name="message" rows="4" 
-                      placeholder="Type your message here..." required></textarea>
+            <textarea class="form-control shadow-sm" id="message" name="message" rows="4" placeholder="Type your message here..." required></textarea>
           </div>
 
           <!-- File Attachment -->
@@ -58,6 +58,11 @@
     </div>
   </div>
 </div>
+
+<script>
+  // Apply CKEditor to the message textarea
+  CKEDITOR.replace('message');
+</script>
 
 <!-- JavaScript to Hide Alert After 5 Seconds -->
 <script>

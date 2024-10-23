@@ -67,7 +67,7 @@ def send_email_notification_bulk(mail_subject, message, to_email, attachment=Non
         if attachment is not None:
             # Use attach method instead of attach_file
             mail.attach(attachment.name, attachment.read(), attachment.content_type)
-
+        mail.content_subtype = 'html' # for ckeditor 
         mail.send()
     except Exception as e:
         raise e

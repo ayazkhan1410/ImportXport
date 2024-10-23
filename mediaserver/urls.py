@@ -8,7 +8,8 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include("automation.urls")),
-    path('emails/', include('emails.urls'))
+    path('emails/', include('emails.urls')),
+    path('ckeditor/', include('ckeditor_uploader.urls')),  # Add this line
 ]
 
 # only for Local Development
