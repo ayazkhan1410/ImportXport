@@ -3,7 +3,7 @@ from automation.models import *
 from django.apps import apps
 from django.http import JsonResponse, HttpResponse
 from django.contrib import messages
-from django.contrib.auth import authenticate, login, get_user_model
+from django.contrib.auth import authenticate, login, get_user_model, logout
 from uploads.models import Upload
 from django.conf import settings
 import time
@@ -11,6 +11,8 @@ from .tasks import celery_email_send, import_data_task, export_data_task
 from .helpers import *
 import datetime
 from django.core.management import call_command
+from django.contrib.auth.models import User
+import re
 
 User = get_user_model()  
 
@@ -100,7 +102,7 @@ def login_page(request):
             else:
                 request.session.set_expiry(1209600)  # 2 weeks
                 
-            return redirect('index')
+            return redirect('home')
         else:
             print("Invalid email or password")
             messages.error(request, "Invalid email or password")
@@ -108,4 +110,46 @@ def login_page(request):
     return render(request, 'automation/login.html')
 
 def signup(request):
+    if request.method == "POST":
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        confirm_password= request.POST.get('confirm_password')
+        
+        if password != confirm_password:
+            messages.error(request, "Passwords do not match!")
+            return redirect('signup')
+
+        # Password validation: at least 8 characters, uppercase and lowercase
+        if len(password) < 8:
+            messages.error(request, "Password must be at least 8 characters long.")
+            return redirect('signup')
+
+        if not re.search(r'[A-Z]', password):
+            messages.error(request, "Password must contain at least one uppercase letter.")
+            return redirect('signup')
+
+        if not re.search(r'[a-z]', password):
+            messages.error(request, "Password must contain at least one lowercase letter.")
+            return redirect('signup')
+
+        # Check if username already exists
+        if User.objects.filter(username=name).exists():
+            messages.error(request, "Username already taken. Please choose another one.")
+            return redirect('signup')
+    
+        if User.objects.filter(email=email).exists():
+            messages.error(request, "Username with this email already exists. Please enter unique email.")
+            return redirect('signup')
+        
+        # Register the user
+        user = User.objects.create_user(username=name, email=email, password=password)
+        user.save()
+        messages.success(request, "Account created successfully! Please log in.")
+        return redirect('login')
+    
     return render(request, 'automation/signup.html')
+
+def logout_view(request):
+    logout(request)
+    return redirect('/')

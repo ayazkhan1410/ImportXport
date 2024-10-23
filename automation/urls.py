@@ -11,6 +11,7 @@ urlpatterns = [
     # Account URLs
     path('login', views.login_page, name='login'),
     path('sign-up', views.signup, name='signup'),
+    path('logout', views.logout_view, name='logout'),
     
     # Celery Email Testing
     path('email-send', views.email_send)

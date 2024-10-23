@@ -6,6 +6,9 @@
 
 {% block body %}
 <div class="container mt-5">
+
+  {% if user.is_authenticated %}
+  <!-- Main Content for Logged-in Users -->
   <div class="row justify-content-center">
 
     <!-- Import Data Card -->
@@ -35,6 +38,20 @@
     </div>
 
   </div>
-</div>
 
+  {% else %}
+  <!-- Message for Non-Logged-in Users -->
+  <div class="text-center mt-5">
+    <h2>Welcome to DataFlow</h2>
+    <p class="lead mt-3">
+      DataFlow helps you easily manage and exchange your data. Upload your data using CSV files or export it effortlessly into organized reports.
+    </p>
+    <p class="text-muted">
+      Please log in to access the Import and Export features.
+    </p>
+    <a href="{% url 'login' %}" class="btn btn-primary btn-lg mt-3">Login</a>
+  </div>
+  {% endif %}
+
+</div>
 {% endblock body %}
