@@ -4,6 +4,7 @@ from .models import *
 from django.contrib import messages
 from automation.helpers import send_email_notification_bulk
 from django.conf import settings
+from .tasks import celery_bulk_email_send
 
 def send_email(request):
     if request.method == "POST":
@@ -34,7 +35,8 @@ def send_email(request):
             if not to_email:
                 messages.error(request, "No recipients found in the selected email list. Please ensure that the email list has subscribers.")
             else:
-                send_email_notification_bulk(body, message, to_email, attachment)
+                # Handover task to celery
+                celery_bulk_email_send.delay(body, message, to_email, attachment)
                 messages.success(request, "Email sent successfully!")
             return redirect('send_email')
         except List.DoesNotExist:
