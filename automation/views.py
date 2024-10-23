@@ -119,8 +119,7 @@ def signup(request):
         if password != confirm_password:
             messages.error(request, "Passwords do not match!")
             return redirect('signup')
-
-        # Password validation: at least 8 characters, uppercase and lowercase
+        
         if len(password) < 8:
             messages.error(request, "Password must be at least 8 characters long.")
             return redirect('signup')
@@ -133,7 +132,6 @@ def signup(request):
             messages.error(request, "Password must contain at least one lowercase letter.")
             return redirect('signup')
 
-        # Check if username already exists
         if User.objects.filter(username=name).exists():
             messages.error(request, "Username already taken. Please choose another one.")
             return redirect('signup')
@@ -142,7 +140,6 @@ def signup(request):
             messages.error(request, "Username with this email already exists. Please enter unique email.")
             return redirect('signup')
         
-        # Register the user
         user = User.objects.create_user(username=name, email=email, password=password)
         user.save()
         messages.success(request, "Account created successfully! Please log in.")
