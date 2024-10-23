@@ -7,19 +7,24 @@ from django.contrib.auth import authenticate, login, get_user_model
 from uploads.models import Upload
 from django.conf import settings
 import time
-from .tasks import celery_email_send, import_data_task
+from .tasks import celery_email_send, import_data_task, export_data_task
 from .helpers import *
+import datetime
+from django.core.management import call_command
 
 User = get_user_model()  
 
-def index(request):
+def home(request):
+    return render(request, 'automation/home.html')
+
+def import_data(request):
     if request.method == "POST":
         file_path = request.FILES.get('file_path')
         model_name = request.POST.get('model_name') 
         
         if file_path.size > 10 * 1024 * 1024: 
             messages.error(request, "File size must be under 2 MB.")
-            return redirect('/')
+            return redirect('import_data')
         
         # Store the file and Model into Upload Model   
         upload_obj = Upload.objects.create(
@@ -37,13 +42,13 @@ def index(request):
             check_csv_errors(file_path, model_name)
         except Exception as err:
             messages.error(request, str(err))
-            return redirect('/')
+            return redirect('import_data')
         # Handle the import data task here
         import_data_task.delay(file_path, model_name)
         
         # Show the message to the User
         messages.success(request, "You will be get notified once you're data has been imported")
-        return redirect('/')
+        return redirect('import_data')
 
     custom_models = get_all_custom_models()
     context = {
@@ -51,6 +56,24 @@ def index(request):
     }
     return render(request, "automation/index.html", context)
 
+def export_data(request):
+    if request.method == "POST":
+        model_name = request.POST.get('model_name')
+        
+        # Handle the export data task
+        export_data_task.delay(model_name)
+        
+        # Show the message to the User
+        messages.success(request, "You will be get notified once you're data has been Exported")
+        return redirect('export_data')
+
+    custom_models = get_all_custom_models()
+    context = {
+        'custom_models': custom_models
+    }
+    return render(request, 'automation/export-data.html', context)
+
+# Testing View
 def email_send(request):
     celery_email_send.delay()
     return HttpResponse("<h1> Email Testing Function in Django </h1>")

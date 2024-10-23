@@ -2,7 +2,13 @@ from django.urls import path, include
 from . import views
 
 urlpatterns = [
-    path('', views.index, name='index'),
+    path('', views.home,name='home'),
+    
+    # Import and export Data
+    path('import-data', views.import_data, name='import_data'),
+    path('export-data', views.export_data, name='export_data'),
+    
+    # Account URLs
     path('login', views.login_page, name='login'),
     path('sign-up', views.signup, name='signup'),
     

@@ -6,7 +6,7 @@
 
 {% block body %}
 <div class="container mt-5">
-  <div class="card shadow-lg p-5">
+  <div class="card shadow-lg p-5" style="margin-top: -20px;">
 
     <h1 class="text-center text-primary mb-4">Import Data From CSV File</h1>
     <hr>
@@ -19,7 +19,7 @@
       <div class="mb-4">
         <label class="form-label fs-5" for="customFile">Upload CSV File</label>
         <input type="file" class="form-control" id="customFile" name="file_path" required />
-        <small class="text-muted">Maximum file size: 2 MB</small>
+        <small class="text-muted">Maximum file size: 10 MB</small>
       </div>
 
       <div class="mb-4">
@@ -52,5 +52,6 @@
     }
   });
 </script>
+<br>
 
 {% endblock body %}

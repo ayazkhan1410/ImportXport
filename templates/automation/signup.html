@@ -1,95 +1,46 @@
 {% extends "automation/base.html" %}
 
 {% block title %}
-  <title>Signup Here!</title>
-{% endblock title %}
+<title>DataFlow | Signup</title>
+{% endblock %}
 
 {% block body %}
-<style>
-  body {
-    background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+  <div class="card shadow-lg p-5" style="width: 500px; margin-top: -30px;" >
+    <h2 class="text-center text-primary mb-4">Create an Account</h2>
+    <form method="POST">
+      {% csrf_token %}
 
-  .signup-card {
-    width: 400px;
-    padding: 40px;
-    border-radius: 15px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-    background-color: #fff;
-  }
-
-  .alert {
-    margin-bottom: 20px;
-    padding: 10px;
-    border-radius: 5px;
-  }
-
-  .alert-success {
-    background-color: #d4edda;
-    color: #155724;
-  }
-
-  .alert-danger {
-    background-color: #f8d7da;
-    color: #721c24;
-  }
-
-  a {
-    text-decoration: none;
-  }
-
-  .home-button {
-    display: block;
-    text-align: center;
-    margin-top: 20px;
-  }
-</style>
-
-<div class="signup-card">
-  <h3 class="text-center text-primary mb-4">Create Your Account</h3>
-
-  <!-- Display messages if any -->
-  {% if messages %}
-    {% for message in messages %}
-      <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
-        {{ message }}
+      <div class="mb-3">
+        <label for="name" class="form-label">Full Name</label>
+        <input type="text" class="form-control" id="name" name="name" required>
       </div>
-    {% endfor %}
-  {% endif %}
 
-  <form method="POST">
-    {% csrf_token %}
-    <div class="form-outline mb-4">
-      <input type="text" name="username" class="form-control" placeholder="Enter your username" required />
-      <label class="form-label" for="username">Username</label>
-    </div>
+      <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input type="email" class="form-control" id="email" name="email" required>
+      </div>
 
-    <div class="form-outline mb-4">
-      <input type="email" name="email" class="form-control" placeholder="Enter your email" required />
-      <label class="form-label" for="email">Email address</label>
-    </div>
+      <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input type="password" class="form-control" id="password" name="password" required>
+      </div>
 
-    <div class="form-outline mb-4">
-      <input type="password" name="password1" class="form-control" placeholder="Enter your password" required />
-      <label class="form-label" for="password1">Password</label>
-    </div>
+      <div class="mb-3">
+        <label for="confirm_password" class="form-label">Confirm Password</label>
+        <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
+      </div>
 
-    <div class="form-outline mb-4">
-      <input type="password" name="password2" class="form-control" placeholder="Confirm your password" required />
-      <label class="form-label" for="password2">Confirm Password</label>
-    </div>
+      <div class="text-center">
+        <button type="submit" class="btn btn-primary w-100">Sign Up</button>
+      </div>
+    </form>
 
-    <button type="submit" class="btn btn-primary btn-block w-100 mb-3">Sign Up</button>
-  </form>
-
-  <!-- Home Button -->
-  <div class="home-button">
-    <a href="/" class="btn btn-outline-secondary w-100">Go to Home</a>
+    <p class="text-center mt-4">
+      Already have an account? <a href="{% url 'login' %}" class="text-primary text-decoration-none">Login</a>
+    </p>
   </div>
 </div>
+<br>
 
-{% endblock body %}
+{% endblock %}

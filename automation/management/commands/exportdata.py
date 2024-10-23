@@ -3,6 +3,7 @@ from django.core.management.base import BaseCommand, CommandError
 from django.utils import timezone
 import pytz  # Import pytz for timezone conversion
 from django.apps import apps
+from automation.helpers import generate_csv_filepath
 
  # propose Command : python manage.py exportdata modelname
 class Command(BaseCommand):    
@@ -33,16 +34,8 @@ class Command(BaseCommand):
             if not data.exists():
                 self.stderr(self.style.ERROR("No Record Found.. "))
             
-            # Get the current time in UTC and convert to 'Asia/Karachi'
-            utc_now = timezone.now() 
-            karachi_tz = pytz.timezone('Asia/Karachi')
-            local_time = utc_now.astimezone(karachi_tz)
-
-            # Format the local time
-            formatted_time = local_time.strftime("%d-%m-%Y-%H-%M")
-
-            # define the csv file name/path
-            file_path = f"exported_{model_name}_data_{formatted_time}.csv"
+            # Generating File Path
+            file_path = generate_csv_filepath(model_name)
                     
             # Opening the file and writing data
             with open(file_path, 'w', newline='') as file:
