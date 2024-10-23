@@ -8,6 +8,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include("automation.urls")),
+    path('emails/', include('emails.urls'))
 ]
 
 # only for Local Development

@@ -37,6 +37,35 @@
       </div>
     </div>
 
+  <!-- Bulk Email send Card -->
+    <div class="col-md-5 mb-4">
+      <div class="card shadow-lg text-center">
+        <div class="card-body">
+          <h4 class="card-title text-success">Bulk Email Sending</h4>
+          <p class="card-text text-muted">
+            Easily send personalized emails to multiple recipients
+          </p>
+          <a href="{% url 'send_email' %}" class="btn btn-success btn-lg w-100">Send Emails</a>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-md-5 mb-4">
+      <div class="card shadow-lg text-center">
+        <div class="card-body">
+          <h4 class="card-title text-success">Email Tracking</h4>
+          <p class="card-text text-muted">
+            Monitor the performance of your emails with real-time tracking.
+          </p>
+          <a href="{% url 'home' %}" class="btn btn-success btn-lg w-100">Track Emails</a>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+
+
   </div>
 
   {% else %}

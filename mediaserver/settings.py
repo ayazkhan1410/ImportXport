@@ -33,7 +33,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'myapp',
     "automation",
-    'uploads'
+    'uploads',
+    'emails'
 ]
 
 MIDDLEWARE = [
@@ -139,6 +140,7 @@ EMAIL_PORT = int(os.getenv("EMAIL_PORT", 587))
 EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
 DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL")
+DEFAULT_TO_EMAIL = os.getenv('DEFAULT_TO_EMAIL')
 
 # Delete 10k records
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 10000  

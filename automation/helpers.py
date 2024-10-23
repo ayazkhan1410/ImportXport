@@ -59,6 +59,19 @@ def send_email_notification(mail_subject, message, to_email, attachment=None):
     except Exception as e:
         raise e
 
+def send_email_notification_bulk(mail_subject, message, to_email, attachment=None):
+    try:
+        from_email = settings.EMAIL_HOST_USER
+        mail = EmailMessage(mail_subject, message, from_email, to_email)
+
+        if attachment is not None:
+            # Use attach method instead of attach_file
+            mail.attach(attachment.name, attachment.read(), attachment.content_type)
+
+        mail.send()
+    except Exception as e:
+        raise e
+
 def generate_csv_filepath(model_name):
     # Get the current time in UTC and convert to 'Asia/Karachi'
     utc_now = timezone.now() 
